@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -19,13 +20,16 @@ import com.example.tvlauncher.AppListViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
+private val TvBackground = Color(0xFF0B0B0D)
+private val TvTextPrimary = Color(0xFFFFFFFF)
+private val TvTextSecondary = Color(0xFF8E8E93)
+
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
 fun LauncherScreen(vm: AppListViewModel = viewModel()) {
     val apps by vm.apps.collectAsState()
     val context = LocalContext.current
 
-    // Часы в верхней строке, обновляются раз в минуту
     var time by remember { mutableStateOf(currentTime()) }
     LaunchedEffect(Unit) {
         while (true) {
@@ -44,7 +48,6 @@ fun LauncherScreen(vm: AppListViewModel = viewModel()) {
                 .fillMaxSize()
                 .padding(horizontal = 48.dp, vertical = 32.dp)
         ) {
-            // Верхняя строка: заголовок + часы
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -66,31 +69,17 @@ fun LauncherScreen(vm: AppListViewModel = viewModel()) {
                 )
             }
 
-            if (apps.isEmpty()) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "Загрузка приложений…",
-                        color = TvTextSecondary,
-                        fontSize = 18.sp
-                    )
-                }
-            } else {
-                TvLazyVerticalGrid(
-                    columns = TvGridCells.Fixed(5),
-                    horizontalArrangement = Arrangement.spacedBy(20.dp),
-                    verticalArrangement = Arrangement.spacedBy(20.dp),
-                    contentPadding = PaddingValues(bottom = 32.dp),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(apps, key = { it.packageName }) { app ->
-                        AppTile(app) {
-                            try {
-                                context.startActivity(app.intent)
-                            } catch (_: Exception) { }
-                        }
+            TvLazyVerticalGrid(
+                columns = TvGridCells.Fixed(5),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(apps) { app ->
+                    AppTile(app) {
+                        try {
+                            context.startActivity(app.intent)
+                        } catch (_: Exception) { }
                     }
                 }
             }
