@@ -13,5 +13,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "TvLauncher"
 include(":app")
-```
-

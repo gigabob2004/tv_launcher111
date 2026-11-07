@@ -52,5 +52,3 @@ class AppListViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 }
-```
-

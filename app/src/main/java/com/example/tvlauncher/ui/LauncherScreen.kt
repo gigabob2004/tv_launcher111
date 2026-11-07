@@ -102,5 +102,3 @@ private fun currentTime(): String {
     val fmt = SimpleDateFormat("HH:mm", Locale.getDefault())
     return fmt.format(Date())
 }
-```
-

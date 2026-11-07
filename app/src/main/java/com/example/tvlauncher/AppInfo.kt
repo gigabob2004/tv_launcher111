@@ -9,5 +9,3 @@ data class AppInfo(
     val icon: Drawable?,
     val intent: Intent
 )
-```
-

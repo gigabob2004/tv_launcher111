@@ -3,5 +3,3 @@
     <background android:drawable="@android:color/black" />
     <foreground android:drawable="@drawable/ic_banner" />
 </adaptive-icon>
-```
-

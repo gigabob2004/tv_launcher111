@@ -26,5 +26,3 @@ private val TvColorScheme = darkColorScheme(
 fun TvLauncherTheme(content: @Composable () -> Unit) {
     MaterialTheme(colorScheme = TvColorScheme, content = content)
 }
-```
-
