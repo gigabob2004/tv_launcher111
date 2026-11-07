@@ -1,4 +1,3 @@
-```kotlin
 pluginManagement {
     repositories {
         google()
@@ -16,4 +15,3 @@ rootProject.name = "TvLauncher"
 include(":app")
 ```
 
----

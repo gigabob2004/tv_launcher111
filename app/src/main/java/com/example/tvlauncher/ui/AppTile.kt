@@ -1,4 +1,3 @@
-```kotlin
 package com.example.tvlauncher.ui
 
 import androidx.compose.animation.core.animateFloatAsState
@@ -107,5 +106,3 @@ fun AppTile(
     }
 }
 ```
-
----

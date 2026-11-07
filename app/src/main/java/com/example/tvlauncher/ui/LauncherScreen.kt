@@ -1,4 +1,3 @@
-```kotlin
 package com.example.tvlauncher.ui
 
 import androidx.compose.foundation.background
@@ -105,4 +104,3 @@ private fun currentTime(): String {
 }
 ```
 
----

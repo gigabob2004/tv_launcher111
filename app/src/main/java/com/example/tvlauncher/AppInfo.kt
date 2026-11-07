@@ -1,4 +1,3 @@
-```kotlin
 package com.example.tvlauncher
 
 import android.content.Intent
@@ -12,4 +11,3 @@ data class AppInfo(
 )
 ```
 
----

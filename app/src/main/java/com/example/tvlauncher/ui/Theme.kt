@@ -1,4 +1,3 @@
-```kotlin
 package com.example.tvlauncher.ui
 
 import androidx.compose.material3.MaterialTheme
@@ -29,4 +28,3 @@ fun TvLauncherTheme(content: @Composable () -> Unit) {
 }
 ```
 
----

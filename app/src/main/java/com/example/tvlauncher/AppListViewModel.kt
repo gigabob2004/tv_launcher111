@@ -1,4 +1,3 @@
-```kotlin
 package com.example.tvlauncher
 
 import android.app.Application
@@ -55,4 +54,3 @@ class AppListViewModel(app: Application) : AndroidViewModel(app) {
 }
 ```
 
----
