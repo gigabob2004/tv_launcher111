@@ -1,0 +1,108 @@
+```kotlin
+package com.example.tvlauncher.ui
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.tv.foundation.lazy.grid.TvGridCells
+import androidx.tv.foundation.lazy.grid.TvLazyVerticalGrid
+import androidx.tv.foundation.lazy.grid.items
+import androidx.tv.material3.ExperimentalTvMaterial3Api
+import androidx.tv.material3.Text
+import com.example.tvlauncher.AppListViewModel
+import java.text.SimpleDateFormat
+import java.util.*
+
+@OptIn(ExperimentalTvMaterial3Api::class)
+@Composable
+fun LauncherScreen(vm: AppListViewModel = viewModel()) {
+    val apps by vm.apps.collectAsState()
+    val context = LocalContext.current
+
+    // Часы в верхней строке, обновляются раз в минуту
+    var time by remember { mutableStateOf(currentTime()) }
+    LaunchedEffect(Unit) {
+        while (true) {
+            kotlinx.coroutines.delay(30_000)
+            time = currentTime()
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(TvBackground)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 48.dp, vertical = 32.dp)
+        ) {
+            // Верхняя строка: заголовок + часы
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 28.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Приложения",
+                    color = TvTextPrimary,
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(Modifier.weight(1f))
+                Text(
+                    text = time,
+                    color = TvTextSecondary,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+
+            if (apps.isEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Загрузка приложений…",
+                        color = TvTextSecondary,
+                        fontSize = 18.sp
+                    )
+                }
+            } else {
+                TvLazyVerticalGrid(
+                    columns = TvGridCells.Fixed(5),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp),
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
+                    contentPadding = PaddingValues(bottom = 32.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(apps, key = { it.packageName }) { app ->
+                        AppTile(app) {
+                            try {
+                                context.startActivity(app.intent)
+                            } catch (_: Exception) { }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+private fun currentTime(): String {
+    val fmt = SimpleDateFormat("HH:mm", Locale.getDefault())
+    return fmt.format(Date())
+}
+```
+
+---
